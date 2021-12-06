@@ -1,0 +1,74 @@
+{
+  "input": {
+    # kinesis and file are the only options for stream shredder
+    # Optional, default value kinesis
+    "type": "kinesis",
+    # KCL app name - a DynamoDB table will be created with the same name
+    # Optional, default value snowplow-rdb-shredder
+    "appName": "${app_name}",
+    # Kinesis Stream name
+    "streamName": "${stream_name}",
+    # Kinesis region
+    # This field is optional if it can be resolved with AWS region provider chain.
+    # It checks places like env variables, system properties, AWS profile file.
+    # https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/regions/providers/DefaultAwsRegionProviderChain.html
+    "region": "${region}",
+    # Kinesis position: LATEST or TRIM_HORIZON
+    # Optional, default value LATEST
+    "position": "${initial_position}"
+  }
+
+  # Path to shredded archive
+  "output": {
+    # Path to shredded output
+    "path": "s3://${shredded_output}",
+    # Shredder output compression, GZIP or NONE
+    # Optional, default value GZIP
+    "compression": "${shredder_compression}",
+    # Optional if it can be resolved with AWS region provider chain.
+    "region": "${region}"
+  }
+
+  # Frequency to emit shredding finished message - 5,10,15,20,30,60 etc minutes
+  # Optional, default value 10 minutes
+  "windowing": "${window_period}"
+
+  # Queue used to communicate with Loader
+  %{ if sqs_enabled ~}
+  "queue": {
+    # Type of the queue. It can be either sqs or sns
+    "type": "sqs",
+    # Name of the sqs queue
+    "queueName": "${sqs_queue_name}",
+    # Region of the SQS queue
+    # Optional if it can be resolved with AWS region provider chain
+    "region": "${region}"
+  }
+  %{else}
+  "queue": {
+    # Type of the queue. It can be either sqs or sns
+    "type": "sns",
+    # ARN of SNS topic
+    "topicArn": "${sns_topic_arn}",
+    # Region of the SNS topic
+    "region": "${region}"
+  }
+  %{endif}
+
+  # Schema-specific format settings (recommended to leave all three groups empty and use TSV as default)
+  "formats": {
+    "type": "${format_type}"
+    # Format used by default (TSV or JSON)
+    # Optional, default value TSV
+    "default": "${default_shred_format}",
+    # Schemas to be shredded as JSONs, corresponding JSONPath files must be present. Automigrations will be disabled
+    # Optional, default value []
+    "json": ${schemas_json},
+    # Schemas to be shredded as TSVs, presence of the schema on Iglu Server is necessary. Automigartions enabled
+    # Optional, default value []
+    "tsv": ${schemas_tsv},
+    # Schemas that won't be loaded
+    # Optional, default value []
+    "skip": ${schemas_skip}
+  }
+}
