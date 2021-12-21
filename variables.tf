@@ -42,18 +42,6 @@ variable "iam_permissions_boundary" {
   type        = string
 }
 
-variable "min_size" {
-  description = "The minimum number of servers in this server-group"
-  default     = 1
-  type        = number
-}
-
-variable "max_size" {
-  description = "The maximum number of servers in this server-group"
-  default     = 2
-  type        = number
-}
-
 variable "amazon_linux_2_ami_id" {
   description = "The AMI ID to use which must be based of of Amazon Linux 2; by default the latest community version is used"
   default     = ""
@@ -157,20 +145,20 @@ variable "default_shred_format" {
 
 variable "schemas_json" {
   description = "List of schemas to get shredded as JSON"
-  default     = "[]"
-  type        = string
+  default     = []
+  type        = list(string)
 }
 
 variable "schemas_tsv" {
   description = "List of schemas to get shredded as TSV"
-  default     = "[]"
-  type        = string
+  default     = []
+  type        = list(string)
 }
 
 variable "schemas_skip" {
   description = "List of schemas to not get shredded (and thus not loaded)"
-  default     = "[]"
-  type        = string
+  default     = []
+  type        = list(string)
 }
 
 # --- Iglu Resolver

@@ -40,6 +40,7 @@ resource "aws_s3_bucket" "shredder_output" {
 
 resource "aws_sqs_queue" "message_queue" {
   content_based_deduplication = true
+  kms_master_key_id           = "alias/aws/sqs"
   name                        = var.queue_name
   fifo_queue                  = true
 }
@@ -131,8 +132,6 @@ module "stream_shredder" {
 | <a name="input_kcl_read_min_capacity"></a> [kcl\_read\_min\_capacity](#input\_kcl\_read\_min\_capacity) | The minimum READ capacity for the KCL DynamoDB table | `number` | `1` | no |
 | <a name="input_kcl_write_max_capacity"></a> [kcl\_write\_max\_capacity](#input\_kcl\_write\_max\_capacity) | The maximum WRITE capacity for the KCL DynamoDB table | `number` | `10` | no |
 | <a name="input_kcl_write_min_capacity"></a> [kcl\_write\_min\_capacity](#input\_kcl\_write\_min\_capacity) | The minimum WRITE capacity for the KCL DynamoDB table | `number` | `1` | no |
-| <a name="input_max_size"></a> [max\_size](#input\_max\_size) | The maximum number of servers in this server-group | `number` | `2` | no |
-| <a name="input_min_size"></a> [min\_size](#input\_min\_size) | The minimum number of servers in this server-group | `number` | `1` | no |
 | <a name="input_schemas_json"></a> [schemas\_json](#input\_schemas\_json) | List of schemas to get shredded as JSON | `string` | `"[]"` | no |
 | <a name="input_schemas_tsv"></a> [schemas\_tsv](#input\_schemas\_tsv) | List of schemas to get shredded as TSV | `string` | `"[]"` | no |
 | <a name="input_schemas_skip"></a> [schemas\_tsv](#input\_schemas\_skip) | List of schemas to not get shredded (and thus not loaded) | `string` | `"[]"` | no |

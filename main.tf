@@ -352,9 +352,9 @@ locals {
     sns_topic_arn        = var.sns_topic_arn
     format_type          = var.format_type
     default_shred_format = var.default_shred_format
-    schemas_json         = var.schemas_json
-    schemas_tsv          = var.schemas_tsv
-    schemas_skip         = var.schemas_skip
+    schemas_json         = jsonencode(var.schemas_json)
+    schemas_tsv          = jsonencode(var.schemas_tsv)
+    schemas_skip         = jsonencode(var.schemas_skip)
   })
 
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
@@ -404,8 +404,8 @@ module "tags" {
 resource "aws_autoscaling_group" "asg" {
   name = var.name
 
-  max_size = var.max_size
-  min_size = var.min_size
+  max_size = 1
+  min_size = 1
 
   launch_configuration = aws_launch_configuration.lc.name
 
