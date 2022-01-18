@@ -103,8 +103,13 @@ variable "initial_position" {
   type        = string
 }
 
-variable "shredded_output" {
-  description = "S3 path to shredded output"
+variable "s3_bucket_name" {
+  description = "The name of the S3 bucket events will be loaded into"
+  type        = string
+}
+
+variable "s3_bucket_object_prefix" {
+  description = "An optional prefix under which Snowplow data will be saved"
   type        = string
 }
 

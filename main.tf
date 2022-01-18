@@ -51,6 +51,8 @@ locals {
       ]
     }
   ]
+
+  s3_path = "${var.s3_bucket_name}/${var.s3_bucket_object_prefix}"
 }
 
 data "aws_region" "current" {}
@@ -226,14 +228,23 @@ resource "aws_iam_policy" "iam_policy" {
         {
           Effect = "Allow",
           Action = [
+            "s3:ListBucket"
+          ],
+          Resource = [
+            "arn:aws:s3:::${var.s3_bucket_name}",
+            "arn:aws:s3:::${var.s3_bucket_name}/*"
+          ]
+        },
+        {
+          Effect = "Allow",
+          Action = [
             "s3:GetObject",
             "s3:GetObjectVersion",
-            "s3:ListBucket",
             "s3:PutObject"
           ],
           Resource = [
-            "arn:aws:s3:::${var.shredded_output}",
-            "arn:aws:s3:::${var.shredded_output}/*"
+            "arn:aws:s3:::${local.s3_path}",
+            "arn:aws:s3:::${local.s3_path}/*"
           ]
         }
       ]
@@ -344,7 +355,7 @@ locals {
     stream_name          = var.stream_name
     region               = data.aws_region.current.name
     initial_position     = var.initial_position
-    shredded_output      = var.shredded_output
+    shredded_output      = local.s3_path
     shredder_compression = var.shredder_compression
     window_period        = var.window_period
     sqs_enabled          = local.sqs_enabled
