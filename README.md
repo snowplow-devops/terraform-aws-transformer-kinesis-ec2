@@ -33,14 +33,17 @@ module "enriched_stream" {
   name = var.stream_name
 }
 
-resource "aws_s3_bucket" "shredder_output" {
-  bucket = var.name
-  acl    = "private"
+module "shredder_output_bucket" {
+  source  = "snowplow-devops/s3-bucket/aws"
+  version = "0.1.1"
+
+  bucket_name = var.name
 }
 
 resource "aws_sqs_queue" "message_queue" {
   content_based_deduplication = true
   kms_master_key_id           = "alias/aws/sqs"
+  # queue name should end with '.fifo'
   name                        = var.queue_name
   fifo_queue                  = true
 }
@@ -52,10 +55,10 @@ module "stream_shredder" {
   vpc_id      = var.vpc_id
   subnet_ids  = var.subnet_ids
   
-  stream_name     = module.enriched_stream.name
-  shredded_output = aws_s3_bucket.shredder_output.id
-  window_period   = "10 minutes"
-  sqs_queue_name  = aws_sqs_queue.message_queue.name
+  stream_name       = module.enriched_stream.name
+  shredded_output   = aws_s3_bucket.shredder_output.id
+  window_period_min = 10
+  sqs_queue_name    = aws_sqs_queue.message_queue.name
 
   ssh_key_name     = var.key_name
   ssh_ip_allowlist = ["0.0.0.0/0"]
@@ -112,7 +115,7 @@ module "stream_shredder" {
 |------|-------------|------|---------|:--------:|
 | <a name="input_stream_name"></a> [stream\_name](#input\_stream\_name) | The name of the kinesis stream that the Stream Shredder will pull data from | `string` | n/a | yes |
 | <a name="input_shredded_output"></a> [shredded\_output](#input\_shredded\_output) | The S3 path that the Stream Shredder will write output to | `string` | n/a | yes |
-| <a name="input_window_period"></a> [window\_period](#input\_window\_period) | Frequency to emit loading finished message - 5,10,15,20,30,60 etc minutes | `string` | n/a | yes |
+| <a name="input_window_period_min"></a> [window\_period\_min](#input\_window\_period\_min) | Frequency to emit loading finished message - 5,10,15,20,30,60 etc minutes | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | A name which will be pre-pended to the resources created | `string` | n/a | yes |
 | <a name="input_ssh_key_name"></a> [ssh\_key\_name](#input\_ssh\_key\_name) | The name of the SSH key-pair to attach to all EC2 nodes deployed | `string` | n/a | yes |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | The list of subnets to deploy Stream Shredder across | `list(string)` | n/a | yes |
@@ -153,7 +156,7 @@ module "stream_shredder" {
 
 # Copyright and license
 
-The Terraform AWS Stream Shredder Kinesis on EC2 project is Copyright 2021-2021 Snowplow Analytics Ltd.
+The Terraform AWS Stream Shredder Kinesis on EC2 project is Copyright 2021-2022 Snowplow Analytics Ltd.
 
 Licensed under the [Apache License, Version 2.0][license] (the "License");
 you may not use this software except in compliance with the License.

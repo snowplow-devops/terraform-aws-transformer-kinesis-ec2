@@ -119,9 +119,9 @@ variable "shredder_compression" {
   type        = string
 }
 
-variable "window_period" {
+variable "window_period_min" {
   description = "Frequency to emit loading finished message - 5,10,15,20,30,60 etc minutes"
-  type        = string
+  type        = number
 }
 
 variable "sqs_queue_name" {

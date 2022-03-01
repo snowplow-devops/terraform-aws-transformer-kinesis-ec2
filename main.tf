@@ -231,8 +231,7 @@ resource "aws_iam_policy" "iam_policy" {
             "s3:ListBucket"
           ],
           Resource = [
-            "arn:aws:s3:::${var.s3_bucket_name}",
-            "arn:aws:s3:::${var.s3_bucket_name}/*"
+            "arn:aws:s3:::${var.s3_bucket_name}"
           ]
         },
         {
@@ -357,7 +356,7 @@ locals {
     initial_position     = var.initial_position
     shredded_output      = local.s3_path
     shredder_compression = var.shredder_compression
-    window_period        = var.window_period
+    window_period        = "${var.window_period_min} minutes"
     sqs_enabled          = local.sqs_enabled
     sqs_queue_name       = var.sqs_queue_name
     sns_topic_arn        = var.sns_topic_arn
