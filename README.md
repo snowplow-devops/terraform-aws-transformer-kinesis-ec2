@@ -4,6 +4,8 @@
 
 A Terraform module which deploys the Snowplow RDB Stream Shredder service on EC2.  If you want to use a custom AMI for this deployment you will need to ensure it is based on top of Amazon Linux 2.
 
+*WARNING:* Beware that Stream Shredder is using enhanced fan-out for Kinesis consumer. Also, it publishes Kinesis metrics to CloudWatch. They cause significant cost increase. Even though it is planned to make it [possible](https://github.com/snowplow/snowplow-rdb-loader/issues/760) to [disable them](https://github.com/snowplow/snowplow-rdb-loader/issues/759), it isn't possible to do these currently.
+
 ## Telemetry
 
 This module by default collects and forwards telemetry information to Snowplow to understand how our applications are being used.  No identifying information about your sub-account or account fingerprints are ever forwarded to us - it is very simple information about what modules and applications are deployed and active.
