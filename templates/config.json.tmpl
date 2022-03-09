@@ -57,7 +57,8 @@
 
   # Schema-specific format settings (recommended to leave all three groups empty and use TSV as default)
   "formats": {
-    "type": "${format_type}"
+%{ if transformation_type == "shred" ~}
+    "transformationType": "shred"
     # Format used by default (TSV or JSON)
     # Optional, default value TSV
     "default": "${default_shred_format}",
@@ -70,5 +71,9 @@
     # Schemas that won't be loaded
     # Optional, default value []
     "skip": ${schemas_skip}
+%{endif}
+%{ if transformation_type == "widerow" ~}
+    "transformationType": "widerow"
+%{endif}
   }
 }

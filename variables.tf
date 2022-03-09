@@ -136,8 +136,8 @@ variable "sns_topic_arn" {
   type        = string
 }
 
-variable "format_type" {
-  description = "Type of the output format (shred or widerow)"
+variable "transformation_type" {
+  description = "Type of the transformation (shred or widerow)"
   default     = "shred"
   type        = string
 }

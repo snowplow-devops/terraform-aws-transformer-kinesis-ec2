@@ -360,7 +360,7 @@ locals {
     sqs_enabled          = local.sqs_enabled
     sqs_queue_name       = var.sqs_queue_name
     sns_topic_arn        = var.sns_topic_arn
-    format_type          = var.format_type
+    transformation_type  = var.transformation_type
     default_shred_format = var.default_shred_format
     schemas_json         = jsonencode(var.schemas_json)
     schemas_tsv          = jsonencode(var.schemas_tsv)
