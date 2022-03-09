@@ -3,7 +3,7 @@ locals {
   module_version = "0.1.0"
 
   app_name    = "snowplow-rdb-stream-shredder"
-  app_version = "3.0.0-rc4"
+  app_version = "3.0.0-rc9"
 
   local_tags = {
     Name           = var.name
