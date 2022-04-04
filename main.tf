@@ -1,9 +1,9 @@
 locals {
-  module_name    = "stream-shredder-kinesis-ec2"
+  module_name    = "transformer-kinesis-ec2"
   module_version = "0.1.0"
 
-  app_name    = "snowplow-rdb-stream-shredder"
-  app_version = "3.0.0-rc9"
+  app_name    = "transformer-kinesis"
+  app_version = "3.0.0"
 
   local_tags = {
     Name           = var.name
@@ -141,7 +141,7 @@ resource "aws_cloudwatch_log_group" "log_group" {
 
 resource "aws_iam_role" "iam_role" {
   name        = var.name
-  description = "Allows the Stream Shredder nodes to access required services"
+  description = "Allows the Transformer nodes to access required services"
   tags        = local.tags
 
   assume_role_policy = <<EOF
@@ -354,8 +354,8 @@ locals {
     stream_name          = var.stream_name
     region               = data.aws_region.current.name
     initial_position     = var.initial_position
-    shredded_output      = local.s3_path
-    shredder_compression = var.shredder_compression
+    transformed_output   = local.s3_path
+    compression          = var.transformer_compression
     window_period        = "${var.window_period_min} minutes"
     sqs_enabled          = local.sqs_enabled
     sqs_queue_name       = var.sqs_queue_name

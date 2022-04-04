@@ -4,12 +4,12 @@ variable "name" {
 }
 
 variable "vpc_id" {
-  description = "The VPC to deploy Stream Shredder within"
+  description = "The VPC to deploy Transformer within"
   type        = string
 }
 
 variable "subnet_ids" {
-  description = "The list of subnets to deploy Stream Shredder across"
+  description = "The list of subnets to deploy Transformer across"
   type        = list(string)
 }
 
@@ -93,7 +93,7 @@ variable "cloudwatch_logs_retention_days" {
 # --- Configuration options
 
 variable "stream_name" {
-  description = "The name of the input kinesis stream that the Stream Shredder will pull data from"
+  description = "The name of the input kinesis stream that the Transformer will pull data from"
   type        = string
 }
 
@@ -113,8 +113,8 @@ variable "s3_bucket_object_prefix" {
   type        = string
 }
 
-variable "shredder_compression" {
-  description = "Shredder output compression, GZIP or NONE"
+variable "transformer_compression" {
+  description = "Transformer output compression, GZIP or NONE"
   default     = "GZIP"
   type        = string
 }
@@ -125,13 +125,13 @@ variable "window_period_min" {
 }
 
 variable "sqs_queue_name" {
-  description = "The name of the SQS queue that Stream Shredder will send the shredding complete message. Either `sqs_queue_name` or `sns_topic_arn` needs to be set"
+  description = "The name of the SQS queue that Transformer will send the transforming complete message. Either `sqs_queue_name` or `sns_topic_arn` needs to be set"
   default     = ""
   type        = string
 }
 
 variable "sns_topic_arn" {
-  description = "The ARN of the SNS topic that Stream Shredder will send the shredding complete message. Either `sqs_queue_name` or `sns_topic_arn` needs to be set"
+  description = "The ARN of the SNS topic that Transformer will send the transforming complete message. Either `sqs_queue_name` or `sns_topic_arn` needs to be set"
   default     = ""
   type        = string
 }
@@ -169,7 +169,7 @@ variable "schemas_skip" {
 # --- Iglu Resolver
 
 variable "default_iglu_resolvers" {
-  description = "The default Iglu Resolvers that will be used by Stream Shredder"
+  description = "The default Iglu Resolvers that will be used by Transformer"
   default = [
     {
       name            = "Iglu Central"
@@ -196,7 +196,7 @@ variable "default_iglu_resolvers" {
 }
 
 variable "custom_iglu_resolvers" {
-  description = "The custom Iglu Resolvers that will be used by Stream Shredder"
+  description = "The custom Iglu Resolvers that will be used by Transformer"
   default     = []
   type = list(object({
     name            = string

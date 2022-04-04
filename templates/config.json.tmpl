@@ -1,10 +1,10 @@
 {
   "input": {
-    # kinesis and file are the only options for stream shredder
+    # kinesis and file are the only options for Transformer
     # Optional, default value kinesis
     "type": "kinesis",
     # KCL app name - a DynamoDB table will be created with the same name
-    # Optional, default value snowplow-rdb-shredder
+    # Optional, default value Transformer
     "appName": "${app_name}",
     # Kinesis Stream name
     "streamName": "${stream_name}",
@@ -18,18 +18,18 @@
     "position": "${initial_position}"
   }
 
-  # Path to shredded archive
+  # Path to transformed archive
   "output": {
-    # Path to shredded output
-    "path": "s3://${shredded_output}",
-    # Shredder output compression, GZIP or NONE
+    # Path to transformed output
+    "path": "s3://${transformed_output}",
+    # Transformer output compression, GZIP or NONE
     # Optional, default value GZIP
-    "compression": "${shredder_compression}",
+    "compression": "${compression}",
     # Optional if it can be resolved with AWS region provider chain.
     "region": "${region}"
   }
 
-  # Frequency to emit shredding finished message - 5,10,15,20,30,60 etc minutes
+  # Frequency to emit transforming finished message - 5,10,15,20,30,60 etc minutes
   # Optional, default value 10 minutes
   "windowing": "${window_period}"
 
