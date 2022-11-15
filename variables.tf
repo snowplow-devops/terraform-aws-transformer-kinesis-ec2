@@ -166,6 +166,12 @@ variable "schemas_skip" {
   type        = list(string)
 }
 
+variable "java_opts" {
+  description = "Custom JAVA Options"
+  default     = "-Dorg.slf4j.simpleLogger.defaultLogLevel=info"
+  type        = string
+}
+
 # --- Iglu Resolver
 
 variable "default_iglu_resolvers" {
