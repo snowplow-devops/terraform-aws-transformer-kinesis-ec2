@@ -74,6 +74,9 @@
 %{endif}
 %{ if transformation_type == "widerow" ~}
     "transformationType": "widerow"
+    # Optional. Denotes output file format when transformationType is 'widerow'.
+    # Possible values are 'json' and 'parquet'. Default value 'json'.
+    "fileFormat": "${widerow_file_format}"
 %{endif}
   }
 }
