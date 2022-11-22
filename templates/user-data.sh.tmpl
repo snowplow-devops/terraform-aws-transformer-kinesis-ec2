@@ -36,6 +36,7 @@ sudo docker run \
   --name transformer_kinesis \
   --restart always \
   --network host \
+  --memory=${container_memory} \
 %{ if cloudwatch_logs_enabled ~}
   --log-driver awslogs \
   --log-opt awslogs-group=${cloudwatch_log_group_name} \
@@ -45,7 +46,7 @@ sudo docker run \
   --log-opt max-file=5 \
 %{ endif ~}
   -v $${CONFIG_DIR}:/snowplow/config \
-  -e 'JAVA_OPTS=-Dorg.slf4j.simpleLogger.defaultLogLevel=info' \
+  -e 'JAVA_OPTS=${java_opts}' \
   snowplow/transformer-kinesis:${version} \
   --config $(base64 -w 0 $CONFIG_DIR/transformer_kinesis.json) \
   --iglu-config $(base64 -w 0 $CONFIG_DIR/iglu_resolver.json)

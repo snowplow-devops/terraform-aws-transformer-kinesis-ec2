@@ -30,14 +30,14 @@ Transformer takes data from a enriched input stream and transforms this data and
 ```hcl
 module "enriched_stream" {
   source  = "snowplow-devops/kinesis-stream/aws"
-  version = "0.1.1"
+  version = "0.2.0"
 
   name = var.stream_name
 }
 
 module "transformed_bucket" {
   source  = "snowplow-devops/s3-bucket/aws"
-  version = "0.1.1"
+  version = "0.2.0"
 
   bucket_name = var.transformed_bucket
 }
@@ -73,21 +73,22 @@ module "transformer_kinesis" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 3.45.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.45.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 3.45.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.45.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_kcl_autoscaling"></a> [kcl\_autoscaling](#module\_kcl\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.1.1 |
-| <a name="module_tags"></a> [tags](#module\_tags) | snowplow-devops/tags/aws | 0.1.2 |
-| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.2.0 |
+| <a name="module_instance_type_metrics"></a> [instance\_type\_metrics](#module\_instance\_type\_metrics) | snowplow-devops/ec2-instance-type-metrics/aws | 0.1.2 |
+| <a name="module_kcl_autoscaling"></a> [kcl\_autoscaling](#module\_kcl\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.2.0 |
+| <a name="module_tags"></a> [tags](#module\_tags) | snowplow-devops/tags/aws | 0.2.0 |
+| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.3.0 |
 
 ## Resources
 
@@ -132,6 +133,7 @@ module "transformer_kinesis" {
 | <a name="input_iam_permissions_boundary"></a> [iam\_permissions\_boundary](#input\_iam\_permissions\_boundary) | The permissions boundary ARN to set on IAM roles created | `string` | `""` | no |
 | <a name="input_initial_position"></a> [initial\_position](#input\_initial\_position) | Where to start processing the input Kinesis Stream from (TRIM\_HORIZON or LATEST) | `string` | `"TRIM_HORIZON"` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The instance type to use | `string` | `"t3.micro"` | no |
+| <a name="input_java_opts"></a> [java\_opts](#input\_java\_opts) | Custom JAVA Options | `string` | `"-Dorg.slf4j.simpleLogger.defaultLogLevel=info -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=75"` | no |
 | <a name="input_kcl_read_max_capacity"></a> [kcl\_read\_max\_capacity](#input\_kcl\_read\_max\_capacity) | The maximum READ capacity for the KCL DynamoDB table | `number` | `10` | no |
 | <a name="input_kcl_read_min_capacity"></a> [kcl\_read\_min\_capacity](#input\_kcl\_read\_min\_capacity) | The minimum READ capacity for the KCL DynamoDB table | `number` | `1` | no |
 | <a name="input_kcl_write_max_capacity"></a> [kcl\_write\_max\_capacity](#input\_kcl\_write\_max\_capacity) | The maximum WRITE capacity for the KCL DynamoDB table | `number` | `10` | no |
@@ -147,6 +149,7 @@ module "transformer_kinesis" {
 | <a name="input_transformation_type"></a> [transformation\_type](#input\_transformation\_type) | Type of the transformation (shred or widerow) | `string` | `"shred"` | no |
 | <a name="input_transformer_compression"></a> [transformer\_compression](#input\_transformer\_compression) | Transformer output compression, GZIP or NONE | `string` | `"GZIP"` | no |
 | <a name="input_user_provided_id"></a> [user\_provided\_id](#input\_user\_provided\_id) | An optional unique identifier to identify the telemetry events emitted by this stack | `string` | `""` | no |
+| <a name="input_widerow_file_format"></a> [widerow\_file\_format](#input\_widerow\_file\_format) | The output file\_format from the widerow transformation\_type selected (json or parquet) | `string` | `"json"` | no |
 
 ## Outputs
 
