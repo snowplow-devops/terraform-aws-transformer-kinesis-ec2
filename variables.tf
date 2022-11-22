@@ -166,6 +166,12 @@ variable "schemas_skip" {
   type        = list(string)
 }
 
+variable "widerow_file_format" {
+  description = "The output file_format from the widerow transformation_type selected (json or parquet)"
+  default     = "json"
+  type        = string
+}
+
 # --- Iglu Resolver
 
 variable "default_iglu_resolvers" {

@@ -3,7 +3,7 @@ locals {
   module_version = "0.1.0"
 
   app_name    = "transformer-kinesis"
-  app_version = "3.0.0"
+  app_version = "5.2.0"
 
   local_tags = {
     Name           = var.name
@@ -365,6 +365,7 @@ locals {
     schemas_json         = jsonencode(var.schemas_json)
     schemas_tsv          = jsonencode(var.schemas_tsv)
     schemas_skip         = jsonencode(var.schemas_skip)
+    widerow_file_format  = var.widerow_file_format
   })
 
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
