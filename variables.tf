@@ -16,7 +16,7 @@ variable "subnet_ids" {
 variable "instance_type" {
   description = "The instance type to use"
   type        = string
-  default     = "t3.micro"
+  default     = "t3a.small"
 }
 
 variable "associate_public_ip_address" {
