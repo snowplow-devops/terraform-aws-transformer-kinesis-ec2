@@ -21,7 +21,12 @@
   # Path to transformed archive
   "output": {
     # Path to transformed output
+%{ if widerow_file_format == "parquet" ~}
+    # Note: protocol must be s3a due to dependency on hadoop-aws
+    "path": "s3a://${transformed_output}",
+%{ else }
     "path": "s3://${transformed_output}",
+%{ endif }
     # Transformer output compression, GZIP or NONE
     # Optional, default value GZIP
     "compression": "${compression}",
