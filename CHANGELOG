@@ -1,3 +1,7 @@
+Version 0.2.2 (2022-12-19)
+--------------------------
+Make output path protocol dependent on widerow_file_format (#9)
+
 Version 0.2.1 (2022-11-25)
 --------------------------
 Bump default instance_type to t3a.small (#8)
