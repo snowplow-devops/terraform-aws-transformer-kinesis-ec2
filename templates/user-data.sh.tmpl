@@ -26,6 +26,7 @@ sudo docker run \
 %{ endif ~}
   -v $${CONFIG_DIR}:/snowplow/config \
   -e 'JAVA_OPTS=${java_opts}' \
+  -e "TELEMETRY_INSTANCE_ID=$(get_instance_id)" \
   snowplow/transformer-kinesis:${version} \
   --config $(base64 -w 0 $CONFIG_DIR/transformer_kinesis.json) \
   --iglu-config $(base64 -w 0 $CONFIG_DIR/iglu_resolver.json)
