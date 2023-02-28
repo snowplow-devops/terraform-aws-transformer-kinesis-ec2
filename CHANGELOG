@@ -1,3 +1,8 @@
+Version 0.3.0 (2023-02-28)
+--------------------------
+Use service module and leverage IMDSv2 (#11)
+Bump app_version to 5.3.1 (#12)
+
 Version 0.2.2 (2022-12-19)
 --------------------------
 Make output path protocol dependent on widerow_file_format (#9)

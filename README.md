@@ -4,6 +4,8 @@
 
 A Terraform module which deploys the Transformer Kinesis service on EC2.  If you want to use a custom AMI for this deployment you will need to ensure it is based on top of Amazon Linux 2.
 
+*WARNING:* Due to the ability to introduce large numbers of duplicates when scaling this application horizontally we lock the application to a single instance - if you need more throughput from this application you will need to "vertically" scale it by changing the `instance_type` to a large node type and re-applying the module.  By default this is a `t3a.small` which should handle over 100 RPS without needing any scale-up.
+
 ## Telemetry
 
 This module by default collects and forwards telemetry information to Snowplow to understand how our applications are being used.  No identifying information about your sub-account or account fingerprints are ever forwarded to us - it is very simple information about what modules and applications are deployed and active.
@@ -156,7 +158,7 @@ module "transformer_kinesis" {
 
 # Copyright and license
 
-The Terraform AWS Transformer Kinesis on EC2 project is Copyright 2021-2022 Snowplow Analytics Ltd.
+The Terraform AWS Transformer Kinesis on EC2 project is Copyright 2021-2023 Snowplow Analytics Ltd.
 
 Licensed under the [Apache License, Version 2.0][license] (the "License");
 you may not use this software except in compliance with the License.
