@@ -3,7 +3,7 @@ locals {
   module_version = "0.2.2"
 
   app_name    = "transformer-kinesis"
-  app_version = "5.2.0"
+  app_version = "5.3.1"
 
   local_tags = {
     Name           = var.name
@@ -352,6 +352,15 @@ locals {
     schemas_tsv          = jsonencode(var.schemas_tsv)
     schemas_skip         = jsonencode(var.schemas_skip)
     widerow_file_format  = var.widerow_file_format
+
+    telemetry_disable          = !var.telemetry_enabled
+    telemetry_collector_uri    = join("", module.telemetry.*.collector_uri)
+    telemetry_collector_port   = 443
+    telemetry_secure           = true
+    telemetry_user_provided_id = var.user_provided_id
+    telemetry_auto_gen_id      = join("", module.telemetry.*.auto_generated_id)
+    telemetry_module_name      = local.module_name
+    telemetry_module_version   = local.module_version
   })
 
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
