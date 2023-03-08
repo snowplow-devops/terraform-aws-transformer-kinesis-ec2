@@ -1,14 +1,3 @@
-readonly CONFIG_DIR=/opt/snowplow/config
-
-sudo mkdir -p $${CONFIG_DIR}
-sudo cat << EOF > $${CONFIG_DIR}/transformer_kinesis.json
-${config}
-EOF
-
-sudo cat << EOF > $${CONFIG_DIR}/iglu_resolver.json
-${iglu_resolver}
-EOF
-
 # Launch the loader
 sudo docker run \
   -d \
@@ -24,11 +13,10 @@ sudo docker run \
   --log-opt max-size=10m \
   --log-opt max-file=5 \
 %{ endif ~}
-  -v $${CONFIG_DIR}:/snowplow/config \
-  -e 'JAVA_OPTS=${java_opts}' \
-  -e "TELEMETRY_INSTANCE_ID=$(get_instance_id)" \
+  -e 'JAVA_OPTS=-Dconfig.override_with_env_vars=true ${java_opts}' \
+  -e "CONFIG_FORCE_telemetry_instanceId=$(get_instance_id)" \
   snowplow/transformer-kinesis:${version} \
-  --config $(base64 -w 0 $CONFIG_DIR/transformer_kinesis.json) \
-  --iglu-config $(base64 -w 0 $CONFIG_DIR/iglu_resolver.json)
+  --config ${config_b64} \
+  --iglu-config ${iglu_resolver_b64}
 
 ${telemetry_script}

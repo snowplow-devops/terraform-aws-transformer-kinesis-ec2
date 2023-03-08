@@ -364,9 +364,9 @@ locals {
   })
 
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
-    config        = local.config
-    iglu_resolver = local.iglu_resolver
-    version       = local.app_version
+    config_b64        = base64encode(local.config)
+    iglu_resolver_b64 = base64encode(local.iglu_resolver)
+    version           = local.app_version
 
     telemetry_script = join("", module.telemetry.*.amazon_linux_2_user_data)
 
@@ -380,7 +380,7 @@ locals {
 
 module "service" {
   source  = "snowplow-devops/service-ec2/aws"
-  version = "0.1.0"
+  version = "0.1.1"
 
   user_supplied_script = local.user_data
   name                 = var.name
