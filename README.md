@@ -30,14 +30,12 @@ Transformer takes data from a enriched input stream and transforms this data and
 ```hcl
 module "enriched_stream" {
   source  = "snowplow-devops/kinesis-stream/aws"
-  version = "0.2.0"
 
   name = var.stream_name
 }
 
 module "transformed_bucket" {
   source  = "snowplow-devops/s3-bucket/aws"
-  version = "0.2.0"
 
   bucket_name = var.transformed_bucket
 }
