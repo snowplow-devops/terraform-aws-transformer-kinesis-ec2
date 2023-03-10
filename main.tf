@@ -3,7 +3,7 @@ locals {
   module_version = "0.3.2"
 
   app_name    = "transformer-kinesis"
-  app_version = "5.3.1"
+  app_version = "5.3.2"
 
   local_tags = {
     Name           = var.name
@@ -218,7 +218,8 @@ resource "aws_iam_policy" "iam_policy" {
           Action = [
             "s3:GetObject",
             "s3:GetObjectVersion",
-            "s3:PutObject"
+            "s3:PutObject",
+            "s3:Delete*"
           ],
           Resource = [
             "arn:aws:s3:::${local.s3_path}",
