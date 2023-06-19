@@ -1,3 +1,8 @@
+Version 0.3.4 (2023-06-19)
+--------------------------
+Bump app_version to v5.6.0 (#19)
+Bump service module to v0.2.0 (#21)
+
 Version 0.3.3 (2023-03-10)
 --------------------------
 Bump app_version to v5.3.2 (#17)
