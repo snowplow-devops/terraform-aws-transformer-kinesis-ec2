@@ -3,7 +3,7 @@ locals {
   module_version = "0.3.3"
 
   app_name    = "transformer-kinesis"
-  app_version = "5.3.2"
+  app_version = "5.6.0"
 
   local_tags = {
     Name           = var.name
