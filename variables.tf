@@ -232,3 +232,17 @@ variable "user_provided_id" {
   type        = string
   default     = ""
 }
+
+# --- Sentry Support
+
+variable "sentry_enabled" {
+  description = "Whether Sentry support is enabled"
+  type = bool
+  default = false
+}
+
+variable "sentry_dsn" {
+  description = "Sentry project DSN key"
+  type = string
+  default = "http://sentry.acme.com"
+}
