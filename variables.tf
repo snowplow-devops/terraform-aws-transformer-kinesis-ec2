@@ -232,3 +232,18 @@ variable "user_provided_id" {
   type        = string
   default     = ""
 }
+
+# --- Sentry Support
+
+variable "sentry_enabled" {
+  description = "Whether Sentry should be enabled or not"
+  type        = bool
+  default     = false
+}
+
+variable "sentry_dsn" {
+  description = "DSN for Sentry instance"
+  type        = string
+  default     = ""
+  sensitive   = true
+}

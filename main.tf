@@ -362,6 +362,9 @@ locals {
     telemetry_auto_gen_id      = join("", module.telemetry.*.auto_generated_id)
     telemetry_module_name      = local.module_name
     telemetry_module_version   = local.module_version
+
+    sentry_enabled = var.sentry_enabled
+    sentry_dsn     = var.sentry_dsn
   })
 
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {

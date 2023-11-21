@@ -92,6 +92,11 @@
   }
 
   "monitoring": {
+%{ if sentry_enabled ~}
+    "sentry": {
+      "dsn": "${sentry_dsn}"
+    }
+%{endif}
     "metrics": {
       "cloudWatch": false
     }
