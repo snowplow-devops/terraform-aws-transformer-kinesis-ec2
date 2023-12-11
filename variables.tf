@@ -3,6 +3,12 @@ variable "name" {
   type        = string
 }
 
+variable "app_version" {
+  description = "Version of the transformer"
+  type        = string
+  default     = "5.8.0"
+}
+
 variable "vpc_id" {
   description = "The VPC to deploy Transformer within"
   type        = string
@@ -103,9 +109,8 @@ variable "stream_name" {
   type        = string
 }
 
-variable "initial_position" {
-  description = "Where to start processing the input Kinesis Stream from (TRIM_HORIZON or LATEST)"
-  default     = "TRIM_HORIZON"
+variable "config_b64" {
+  description = "Base64 encoded config"
   type        = string
 }
 
@@ -119,17 +124,6 @@ variable "s3_bucket_object_prefix" {
   type        = string
 }
 
-variable "transformer_compression" {
-  description = "Transformer output compression, GZIP or NONE"
-  default     = "GZIP"
-  type        = string
-}
-
-variable "window_period_min" {
-  description = "Frequency to emit loading finished message - 5,10,15,20,30,60 etc minutes"
-  type        = number
-}
-
 variable "sqs_queue_name" {
   description = "The name of the SQS queue that Transformer will send the transforming complete message. Either `sqs_queue_name` or `sns_topic_arn` needs to be set"
   default     = ""
@@ -139,42 +133,6 @@ variable "sqs_queue_name" {
 variable "sns_topic_arn" {
   description = "The ARN of the SNS topic that Transformer will send the transforming complete message. Either `sqs_queue_name` or `sns_topic_arn` needs to be set"
   default     = ""
-  type        = string
-}
-
-variable "transformation_type" {
-  description = "Type of the transformation (shred or widerow)"
-  default     = "shred"
-  type        = string
-}
-
-variable "default_shred_format" {
-  description = "Format used by default when format type is 'shred' (TSV or JSON)"
-  default     = "TSV"
-  type        = string
-}
-
-variable "schemas_json" {
-  description = "List of schemas to get shredded as JSON"
-  default     = []
-  type        = list(string)
-}
-
-variable "schemas_tsv" {
-  description = "List of schemas to get shredded as TSV"
-  default     = []
-  type        = list(string)
-}
-
-variable "schemas_skip" {
-  description = "List of schemas to not get shredded (and thus not loaded)"
-  default     = []
-  type        = list(string)
-}
-
-variable "widerow_file_format" {
-  description = "The output file_format from the widerow transformation_type selected (json or parquet)"
-  default     = "json"
   type        = string
 }
 

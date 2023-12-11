@@ -2,13 +2,12 @@ locals {
   module_name    = "transformer-kinesis-ec2"
   module_version = "0.3.4"
 
-  app_name    = "transformer-kinesis"
-  app_version = "5.6.0"
+  app_name = "transformer-kinesis"
 
   local_tags = {
     Name           = var.name
     app_name       = local.app_name
-    app_version    = local.app_version
+    app_version    = var.app_version
     module_name    = local.module_name
     module_version = local.module_version
   }
@@ -68,7 +67,7 @@ module "telemetry" {
   cloud            = "AWS"
   region           = data.aws_region.current.name
   app_name         = local.app_name
-  app_version      = local.app_version
+  app_version      = var.app_version
   module_name      = local.module_name
   module_version   = local.module_version
 }
@@ -336,38 +335,10 @@ locals {
 
   iglu_resolver = templatefile("${path.module}/templates/iglu_resolver.json.tmpl", { resolvers = jsonencode(local.resolvers) })
 
-  config = templatefile("${path.module}/templates/config.json.tmpl", {
-    app_name             = var.name
-    stream_name          = var.stream_name
-    region               = data.aws_region.current.name
-    initial_position     = var.initial_position
-    transformed_output   = local.s3_path
-    compression          = var.transformer_compression
-    window_period        = "${var.window_period_min} minutes"
-    sqs_enabled          = local.sqs_enabled
-    sqs_queue_name       = var.sqs_queue_name
-    sns_topic_arn        = var.sns_topic_arn
-    transformation_type  = var.transformation_type
-    default_shred_format = var.default_shred_format
-    schemas_json         = jsonencode(var.schemas_json)
-    schemas_tsv          = jsonencode(var.schemas_tsv)
-    schemas_skip         = jsonencode(var.schemas_skip)
-    widerow_file_format  = var.widerow_file_format
-
-    telemetry_disable          = !var.telemetry_enabled
-    telemetry_collector_uri    = join("", module.telemetry.*.collector_uri)
-    telemetry_collector_port   = 443
-    telemetry_secure           = true
-    telemetry_user_provided_id = var.user_provided_id
-    telemetry_auto_gen_id      = join("", module.telemetry.*.auto_generated_id)
-    telemetry_module_name      = local.module_name
-    telemetry_module_version   = local.module_version
-  })
-
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
-    config_b64        = base64encode(local.config)
+    config_b64        = var.config_b64
     iglu_resolver_b64 = base64encode(local.iglu_resolver)
-    version           = local.app_version
+    version           = var.app_version
 
     telemetry_script = join("", module.telemetry.*.amazon_linux_2_user_data)
 
