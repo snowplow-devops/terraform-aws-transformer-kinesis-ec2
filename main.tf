@@ -3,7 +3,7 @@ locals {
   module_version = "0.3.4"
 
   app_name    = "transformer-kinesis"
-  app_version = "5.6.0"
+  app_version = var.app_version
 
   local_tags = {
     Name           = var.name
@@ -365,7 +365,7 @@ locals {
   })
 
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
-    config_b64        = base64encode(local.config)
+    config_b64        = var.config_override_b64 == "" ? base64encode(local.config) : var.config_override_b64
     iglu_resolver_b64 = base64encode(local.iglu_resolver)
     version           = local.app_version
 
