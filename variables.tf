@@ -3,6 +3,18 @@ variable "name" {
   type        = string
 }
 
+variable "app_version" {
+  description = "Version of transformer kinesis"
+  type        = string
+  default     = "5.8.0"
+}
+
+variable "config_override_b64" {
+  description = "App config uploaded as a base64 encoded blob. This variable facilitates dev flow, if config is incorrect this can break the deployment."
+  type        = string
+  default     = ""
+}
+
 variable "vpc_id" {
   description = "The VPC to deploy Transformer within"
   type        = string
