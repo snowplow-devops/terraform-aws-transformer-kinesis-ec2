@@ -60,7 +60,7 @@ data "aws_caller_identity" "current" {}
 
 module "telemetry" {
   source  = "snowplow-devops/telemetry/snowplow"
-  version = "0.4.0"
+  version = "0.5.0"
 
   count = var.telemetry_enabled ? 1 : 0
 

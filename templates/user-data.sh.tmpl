@@ -13,8 +13,8 @@ sudo docker run \
   --log-opt max-size=10m \
   --log-opt max-file=5 \
 %{ endif ~}
-  -e 'JAVA_OPTS=-Dconfig.override_with_env_vars=true ${java_opts}' \
-  -e "CONFIG_FORCE_telemetry_instanceId=$(get_instance_id)" \
+  --env JDK_JAVA_OPTIONS='${java_opts}' \
+  --env INSTANCE_ID=$(get_instance_id) \
   snowplow/transformer-kinesis:${version} \
   --config ${config_b64} \
   --iglu-config ${iglu_resolver_b64}
