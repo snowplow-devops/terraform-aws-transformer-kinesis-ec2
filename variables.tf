@@ -6,7 +6,7 @@ variable "name" {
 variable "app_version" {
   description = "Version of transformer kinesis"
   type        = string
-  default     = "5.8.0"
+  default     = "5.7.5"
 }
 
 variable "config_override_b64" {
