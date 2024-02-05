@@ -365,6 +365,8 @@ locals {
   })
 
   user_data = templatefile("${path.module}/templates/user-data.sh.tmpl", {
+    accept_limited_use_license = var.accept_limited_use_license
+
     config_b64        = var.config_override_b64 == "" ? base64encode(local.config) : var.config_override_b64
     iglu_resolver_b64 = base64encode(local.iglu_resolver)
     version           = local.app_version
