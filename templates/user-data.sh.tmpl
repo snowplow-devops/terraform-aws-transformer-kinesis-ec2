@@ -1,3 +1,7 @@
+%{ if is_private_ecr_registry }
+aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${private_ecr_registry}
+%{ endif ~}
+
 # Launch the loader
 sudo docker run \
   -d \
@@ -16,7 +20,7 @@ sudo docker run \
   --env JDK_JAVA_OPTIONS='${java_opts}' \
   --env ACCEPT_LIMITED_USE_LICENSE=${accept_limited_use_license} \
   --env INSTANCE_ID=$(get_instance_id) \
-  snowplow/transformer-kinesis:${version} \
+  ${private_ecr_registry}snowplow/transformer-kinesis:${version} \
   --config ${config_b64} \
   --iglu-config ${iglu_resolver_b64}
 
