@@ -138,6 +138,7 @@ module "transformer_kinesis" {
 | <a name="input_kcl_read_min_capacity"></a> [kcl\_read\_min\_capacity](#input\_kcl\_read\_min\_capacity) | The minimum READ capacity for the KCL DynamoDB table | `number` | `1` | no |
 | <a name="input_kcl_write_max_capacity"></a> [kcl\_write\_max\_capacity](#input\_kcl\_write\_max\_capacity) | The maximum WRITE capacity for the KCL DynamoDB table | `number` | `10` | no |
 | <a name="input_kcl_write_min_capacity"></a> [kcl\_write\_min\_capacity](#input\_kcl\_write\_min\_capacity) | The minimum WRITE capacity for the KCL DynamoDB table | `number` | `1` | no |
+| <a name="input_private_ecr_registry"></a> [private\_ecr\_registry](#input\_private\_ecr\_registry) | The URL of an ECR registry that the sub-account has access to (e.g. '000000000000.dkr.ecr.cn-north-1.amazonaws.com.cn/') | `string` | `""` | no |
 | <a name="input_schemas_json"></a> [schemas\_json](#input\_schemas\_json) | List of schemas to get shredded as JSON | `list(string)` | `[]` | no |
 | <a name="input_schemas_skip"></a> [schemas\_skip](#input\_schemas\_skip) | List of schemas to not get shredded (and thus not loaded) | `list(string)` | `[]` | no |
 | <a name="input_schemas_tsv"></a> [schemas\_tsv](#input\_schemas\_tsv) | List of schemas to get shredded as TSV | `list(string)` | `[]` | no |
