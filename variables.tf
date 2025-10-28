@@ -65,8 +65,8 @@ variable "iam_permissions_boundary" {
   type        = string
 }
 
-variable "amazon_linux_2_ami_id" {
-  description = "The AMI ID to use which must be based of of Amazon Linux 2; by default the latest community version is used"
+variable "amazon_linux_2023_ami_id" {
+  description = "The AMI ID to use which must be based of of Amazon Linux 2023; by default the latest community version is used"
   default     = ""
   type        = string
 }
