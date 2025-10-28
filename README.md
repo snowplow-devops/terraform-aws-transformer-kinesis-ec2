@@ -87,8 +87,8 @@ module "transformer_kinesis" {
 |------|--------|---------|
 | <a name="module_instance_type_metrics"></a> [instance\_type\_metrics](#module\_instance\_type\_metrics) | snowplow-devops/ec2-instance-type-metrics/aws | 0.1.2 |
 | <a name="module_kcl_autoscaling"></a> [kcl\_autoscaling](#module\_kcl\_autoscaling) | snowplow-devops/dynamodb-autoscaling/aws | 0.2.0 |
-| <a name="module_service"></a> [service](#module\_service) | snowplow-devops/service-ec2/aws | 0.2.1 |
-| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.5.0 |
+| <a name="module_service"></a> [service](#module\_service) | snowplow-devops/service-ec2/aws | 0.3.2 |
+| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.6.0 |
 
 ## Resources
 
@@ -121,14 +121,14 @@ module "transformer_kinesis" {
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC to deploy Transformer within | `string` | n/a | yes |
 | <a name="input_window_period_min"></a> [window\_period\_min](#input\_window\_period\_min) | Frequency to emit loading finished message - 5,10,15,20,30,60 etc minutes | `number` | n/a | yes |
 | <a name="input_accept_limited_use_license"></a> [accept\_limited\_use\_license](#input\_accept\_limited\_use\_license) | Acceptance of the SLULA terms (https://docs.snowplow.io/limited-use-license-1.0/) | `bool` | `false` | no |
-| <a name="input_amazon_linux_2_ami_id"></a> [amazon\_linux\_2\_ami\_id](#input\_amazon\_linux\_2\_ami\_id) | The AMI ID to use which must be based of of Amazon Linux 2; by default the latest community version is used | `string` | `""` | no |
-| <a name="input_app_version"></a> [app\_version](#input\_app\_version) | Version of transformer kinesis | `string` | `"5.6.0"` | no |
+| <a name="input_amazon_linux_2023_ami_id"></a> [amazon\_linux\_2023\_ami\_id](#input\_amazon\_linux\_2023\_ami\_id) | The AMI ID to use which must be based of of Amazon Linux 2023; by default the latest community version is used | `string` | `""` | no |
+| <a name="input_app_version"></a> [app\_version](#input\_app\_version) | Version of transformer kinesis | `string` | `"6.1.5"` | no |
 | <a name="input_associate_public_ip_address"></a> [associate\_public\_ip\_address](#input\_associate\_public\_ip\_address) | Whether to assign a public ip address to this instance | `bool` | `true` | no |
 | <a name="input_cloudwatch_logs_enabled"></a> [cloudwatch\_logs\_enabled](#input\_cloudwatch\_logs\_enabled) | Whether application logs should be reported to CloudWatch | `bool` | `true` | no |
 | <a name="input_cloudwatch_logs_retention_days"></a> [cloudwatch\_logs\_retention\_days](#input\_cloudwatch\_logs\_retention\_days) | The length of time in days to retain logs for | `number` | `7` | no |
 | <a name="input_config_override_b64"></a> [config\_override\_b64](#input\_config\_override\_b64) | App config uploaded as a base64 encoded blob. This variable facilitates dev flow, if config is incorrect this can break the deployment. | `string` | `""` | no |
-| <a name="input_custom_iglu_resolvers"></a> [custom\_iglu\_resolvers](#input\_custom\_iglu\_resolvers) | The custom Iglu Resolvers that will be used by Transformer | <pre>list(object({<br>    name            = string<br>    priority        = number<br>    uri             = string<br>    api_key         = string<br>    vendor_prefixes = list(string)<br>  }))</pre> | `[]` | no |
-| <a name="input_default_iglu_resolvers"></a> [default\_iglu\_resolvers](#input\_default\_iglu\_resolvers) | The default Iglu Resolvers that will be used by Transformer | <pre>list(object({<br>    name            = string<br>    priority        = number<br>    uri             = string<br>    api_key         = string<br>    vendor_prefixes = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "api_key": "",<br>    "name": "Iglu Central",<br>    "priority": 10,<br>    "uri": "http://iglucentral.com",<br>    "vendor_prefixes": []<br>  },<br>  {<br>    "api_key": "",<br>    "name": "Iglu Central - Mirror 01",<br>    "priority": 20,<br>    "uri": "http://mirror01.iglucentral.com",<br>    "vendor_prefixes": []<br>  }<br>]</pre> | no |
+| <a name="input_custom_iglu_resolvers"></a> [custom\_iglu\_resolvers](#input\_custom\_iglu\_resolvers) | The custom Iglu Resolvers that will be used by Transformer | <pre>list(object({<br/>    name            = string<br/>    priority        = number<br/>    uri             = string<br/>    api_key         = string<br/>    vendor_prefixes = list(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_default_iglu_resolvers"></a> [default\_iglu\_resolvers](#input\_default\_iglu\_resolvers) | The default Iglu Resolvers that will be used by Transformer | <pre>list(object({<br/>    name            = string<br/>    priority        = number<br/>    uri             = string<br/>    api_key         = string<br/>    vendor_prefixes = list(string)<br/>  }))</pre> | <pre>[<br/>  {<br/>    "api_key": "",<br/>    "name": "Iglu Central",<br/>    "priority": 10,<br/>    "uri": "http://iglucentral.com",<br/>    "vendor_prefixes": []<br/>  },<br/>  {<br/>    "api_key": "",<br/>    "name": "Iglu Central - Mirror 01",<br/>    "priority": 20,<br/>    "uri": "http://mirror01.iglucentral.com",<br/>    "vendor_prefixes": []<br/>  }<br/>]</pre> | no |
 | <a name="input_default_shred_format"></a> [default\_shred\_format](#input\_default\_shred\_format) | Format used by default when format type is 'shred' (TSV or JSON) | `string` | `"TSV"` | no |
 | <a name="input_iam_permissions_boundary"></a> [iam\_permissions\_boundary](#input\_iam\_permissions\_boundary) | The permissions boundary ARN to set on IAM roles created | `string` | `""` | no |
 | <a name="input_initial_position"></a> [initial\_position](#input\_initial\_position) | Where to start processing the input Kinesis Stream from (TRIM\_HORIZON or LATEST) | `string` | `"TRIM_HORIZON"` | no |
@@ -144,7 +144,7 @@ module "transformer_kinesis" {
 | <a name="input_schemas_tsv"></a> [schemas\_tsv](#input\_schemas\_tsv) | List of schemas to get shredded as TSV | `list(string)` | `[]` | no |
 | <a name="input_sns_topic_arn"></a> [sns\_topic\_arn](#input\_sns\_topic\_arn) | The ARN of the SNS topic that Transformer will send the transforming complete message. Either `sqs_queue_name` or `sns_topic_arn` needs to be set | `string` | `""` | no |
 | <a name="input_sqs_queue_name"></a> [sqs\_queue\_name](#input\_sqs\_queue\_name) | The name of the SQS queue that Transformer will send the transforming complete message. Either `sqs_queue_name` or `sns_topic_arn` needs to be set | `string` | `""` | no |
-| <a name="input_ssh_ip_allowlist"></a> [ssh\_ip\_allowlist](#input\_ssh\_ip\_allowlist) | The list of CIDR ranges to allow SSH traffic from | `list(any)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
+| <a name="input_ssh_ip_allowlist"></a> [ssh\_ip\_allowlist](#input\_ssh\_ip\_allowlist) | The list of CIDR ranges to allow SSH traffic from | `list(any)` | <pre>[<br/>  "0.0.0.0/0"<br/>]</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | The tags to append to this resource | `map(string)` | `{}` | no |
 | <a name="input_telemetry_enabled"></a> [telemetry\_enabled](#input\_telemetry\_enabled) | Whether or not to send telemetry information back to Snowplow Analytics Ltd | `bool` | `true` | no |
 | <a name="input_transformation_type"></a> [transformation\_type](#input\_transformation\_type) | Type of the transformation (shred or widerow) | `string` | `"shred"` | no |
