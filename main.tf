@@ -1,6 +1,6 @@
 locals {
   module_name    = "transformer-kinesis-ec2"
-  module_version = "0.5.0"
+  module_version = "0.5.1"
 
   app_name    = "transformer-kinesis"
   app_version = var.app_version
