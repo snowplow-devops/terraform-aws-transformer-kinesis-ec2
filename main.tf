@@ -1,6 +1,6 @@
 locals {
   module_name    = "transformer-kinesis-ec2"
-  module_version = "0.5.0"
+  module_version = "0.5.1"
 
   app_name    = "transformer-kinesis"
   app_version = var.app_version
@@ -79,7 +79,7 @@ locals {
 
 module "telemetry" {
   source  = "snowplow-devops/telemetry/snowplow"
-  version = "0.6.0"
+  version = "0.6.3"
 
   count = var.telemetry_enabled ? 1 : 0
 
@@ -310,7 +310,7 @@ resource "aws_security_group_rule" "egress_udp_123" {
 
 module "instance_type_metrics" {
   source  = "snowplow-devops/ec2-instance-type-metrics/aws"
-  version = "0.1.2"
+  version = "0.1.3"
 
   instance_type = var.instance_type
 }
@@ -407,7 +407,7 @@ locals {
 
 module "service" {
   source  = "snowplow-devops/service-ec2/aws"
-  version = "0.3.2"
+  version = "0.3.4"
 
   user_supplied_script = local.user_data
   name                 = var.name
